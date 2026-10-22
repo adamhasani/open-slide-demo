@@ -1,64 +1,46 @@
-# open-slide workspace
+# Open-Slide Demo & Interactive Playground
 
-Slides as React components. Each slide lives under `slides/<id>/index.tsx` and default-exports an array of page components. The `@open-slide/core` runtime handles layout, scaling, navigation, thumbnails, and fullscreen play mode — you just write the pages.
+Presentasi interaktif berbasis React + Tailwind CSS yang dapat diedit langsung di browser dan diekspor ke format PowerPoint (`.pptx`) native.
 
-## Getting started
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/adamhasani/open-slide-demo?file=slides/getting-started/index.tsx)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/adamhasani/open-slide-demo)
 
+---
+
+### Quick Links
+- **Interactive Playground (Edit Online Langsung):** [Buka di StackBlitz](https://stackblitz.com/github/adamhasani/open-slide-demo?file=slides/getting-started/index.tsx)
+- **Live Slide Web Viewer:** [adamhasani.github.io/open-slide-demo](https://adamhasani.github.io/open-slide-demo/)
+- **Download File PPTX:** [getting-started.pptx (GitHub Release)](https://github.com/adamhasani/open-slide-demo/releases/download/v1.0.0/getting-started.pptx)
+
+---
+
+## Cara Edit & Lihat Proses
+
+### 1. Langsung di Browser (StackBlitz - Tanpa Install)
+1. Klik link **[Buka di StackBlitz](https://stackblitz.com/github/adamhasani/open-slide-demo?file=slides/getting-started/index.tsx)**.
+2. Web IDE langsung terbuka dengan split screen:
+   - **Kiri:** File editor (`slides/getting-started/index.tsx`).
+   - **Kanan:** Live preview slide yang otomatis hot-reload setiap kali teks atau kode diubah.
+3. Edit judul, teks, warna Tailwind, atau urutan slide. Perubahan langsung terlihat detik itu juga.
+
+### 2. Cloud IDE (GitHub Codespaces)
+1. Buka link **[GitHub Codespaces](https://codespaces.new/adamhasani/open-slide-demo)**.
+2. Lingkungan VS Code cloud lengkap akan dibuat otomatis.
+3. Jalankan `pnpm dev` di terminal, lalu buka tab Ports (5173) untuk live preview.
+
+### 3. Di Lokal Komputer
 ```bash
+git clone https://github.com/adamhasani/open-slide-demo.git
+cd open-slide-demo
 pnpm install
 pnpm dev
 ```
+Buka `http://localhost:5173` di browser.
 
-Then open the dev server and edit `slides/getting-started/index.tsx`, or create a new slide at `slides/<your-slide>/index.tsx`.
+---
 
-## Scripts
-
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the dev server with hot reload. |
-| `pnpm build` | Build a static bundle you can deploy. |
-| `pnpm preview` | Preview the built bundle locally. |
-
-## Authoring a slide
-
-```tsx
-// slides/my-slide/index.tsx
-import type { Page, SlideMeta } from '@open-slide/core';
-
-const Cover: Page = () => (
-  <div style={{ width: '100%', height: '100%' }}>Hello</div>
-);
-
-export const meta: SlideMeta = { title: 'My slide' };
-export default [Cover] satisfies Page[];
+## Ekspor ke PowerPoint (.pptx)
+```bash
+pnpm export --format pptx
 ```
-
-Every page renders into a fixed **1920 × 1080** canvas — design with absolute pixel values. Put images, videos, and fonts under `slides/<id>/assets/` and import them directly.
-
-See [`CLAUDE.md`](./CLAUDE.md) for the full authoring guide.
-
-## Navigation
-
-- Arrow keys / PageUp / PageDown move between pages.
-- `F` enters fullscreen play mode; Esc exits.
-- In play mode: Space / → next, ← prev.
-
-## Claude Code integration
-
-This workspace ships with Claude Code skills preconfigured under `.claude/skills/` and `.agents/skills/`. Ask Claude Code to "make slides about X" and the `create-slide` skill takes over. Use `apply-comments` to iterate via inspector-style markers inside your source.
-
-## Config
-
-Optional `open-slide.config.ts` at the workspace root:
-
-```ts
-import type { OpenSlideConfig } from '@open-slide/core';
-
-const openSlideConfig: OpenSlideConfig = {
-  port: 5173,
-};
-
-export default openSlideConfig;
-```
-
-Supported fields: `slidesDir`, `port`.
+Slide akan dikonversi menjadi berkas PowerPoint `.pptx` asli dengan teks, vektor, dan tata letak yang sepenuhnya dapat diedit (*editable*).
